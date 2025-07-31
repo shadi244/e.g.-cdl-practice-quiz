@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NY CDL Practice Quiz - Sections 1, 2 & 4</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: auto;
+    padding: 1rem;
+    background: #f9f9f9;
+  }
+  h1 {
+    text-align: center;
+  }
+  .question {
+    margin-bottom: 1.5rem;
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 0 5px #ccc;
+  }
+  .answers label {
+    display: block;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+  }
+  button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+  .result {
+    font-weight: bold;
+    margin-top: 0.5rem;
+  }
+</style>
+</head>
+<body>
+<h1>NY CDL Practice Quiz</h1>
+
+<form id="quizForm">
+  <!-- Questions will be injected here -->
+</form>
+
+<button id="submitBtn">Submit Answers</button>
+
+<div id="score" style="font-size:1.2rem; margin-top:1rem;"></div>
+
+<script>
+  const quizData = [
+    {
+      question: "1. What class of CDL is required for a passenger van with 10 people (including driver)?",
+      choices: ["Class A", "Class B", "Class C", "No CDL required"],
+      answer: 2
+    },
+    {
+      question: "2. Which vehicle needs a passenger endorsement?",
+      choices: ["Dump truck", "Taxi", "Bus with 9+ passengers", "Wheelchair van carrying 9+ passengers"],
+      answer: 3
+    },
+    {
+      question: "3. What must interstate CDL applicants submit?",
+      choices: ["Insurance", "Training certificate", "Medical Examiner’s Certificate", "Birth certificate"],
+      answer: 2
+    },
+    {
+      question: "4. Which is NOT a valid self-certification type?",
+      choices: ["Non-Excepted Interstate", "Excepted Intrastate", "Non-Excepted Local", "Excepted Interstate"],
+      answer: 2
+    },
+    {
+      question: "5. When is a CDL required?",
+      choices: [
+        "All trailers",
+        "Personal vehicles over 10,000 lbs",
+        "Any vehicle over 26,001 lbs or with 9+ passengers",
+        "Motorcycles"
+      ],
+      answer: 2
+    },
+    {
+      question: "6. What should be checked in a pre-trip inspection?",
+      choices: ["Brake lights", "Tire pressure", "Steering", "All of the above"],
+      answer: 3
+    },
+    {
+      question: "7. Why look far ahead when driving?",
+      choices: ["Save fuel", "Drive faster", "Spot hazards early", "Avoid boredom"],
+      answer: 2
+    },
+    {
+      question: "8. Proper way to back up?",
+      choices: ["Use mirrors only", "Use helper, back slowly", "Back fast", "Honk often"],
+      answer: 1
+    },
+    {
+      question: "9. Recommended minimum following distance?",
+      choices: ["1 sec", "2 sec", "3 sec", "4+ seconds"],
+      answer: 3
+    },
+    {
+      question: "10. When must you inspect your vehicle?",
+      choices: ["Before trip", "After trip", "Before & after each trip", "Once a week"],
+      answer: 2
+    },
+    {
+      question: "11. Most important reason for inspections?",
+      choices: ["Clean vehicle", "Avoid fines", "Safety", "Gas mileage"],
+      answer: 2
+    },
+    {
+      question: "12. What to do in fog?",
+      choices: ["High beams", "Low beams", "All lights off", "Speed up"],
+      answer: 1
+    },
+    {
+      question: "13. Hydroplaning is:",
+      choices: [
+        "Proper tires",
+        "Tires on water, lose traction",
+        "Steering trick",
+        "Braking style"
+      ],
+      answer: 1
+    },
+    {
+      question: "14. If tired while driving:",
+      choices: ["Speed up", "Energy drinks", "Stop and rest", "Open window"],
+      answer: 2
+    },
+    {
+      question: "15. On long downhill grades:",
+      choices: [
+        "Parking brake",
+        "Use engine or stab braking",
+        "Neutral",
+        "Speed up"
+      ],
+      answer: 1
+    },
+    {
+      question: "16. Before trip with passengers, check:",
+      choices: ["Fuel", "Tires", "Emergency exits", "All of the above"],
+      answer: 3
+    },
+    {
+      question: "17. When can you fuel with passengers onboard?",
+      choices: [
+        "Anytime",
+        "If engine is off",
+        "Only in emergencies",
+        "At night only"
+      ],
+      answer: 2
+    },
+    {
+      question: "18. What do you do at railroad crossings?",
+      choices: [
+        "Stop 5 ft ahead",
+        "Stop 15–50 ft, check tracks",
+        "Speed through",
+        "Honk and go"
+      ],
+      answer: 1
+    },
+    {
+      question: "19. When may passengers stand?",
+      choices: [
+        "If late",
+        "If space allows",
+        "Never",
+        "On short rides"
+      ],
+      answer: 2
+    },
+    {
+      question: "20. What must be secured for wheelchair passengers?",
+      choices: [
+        "Ramp",
+        "Chair tie-downs and occupant restraints",
+        "Seatbelt only",
+        "Nothing"
+      ],
+      answer: 1
+    },
+    {
+      question: "21. A sign of an emergency onboard is:",
+      choices: [
+        "Dirty floor",
+        "Smell of smoke or gas",
+        "Talking",
+        "Loud music"
+      ],
+      answer: 1
+    },
+    {
+      question: "22. When should mirrors be checked?",
+      choices: [
+        "Lane changes only",
+        "Constantly",
+        "Every 30 min",
+        "After stops"
+      ],
+      answer: 1
+    },
+    {
+      question: "23. First step in an evacuation?",
+      choices: [
+        "Speed away",
+        "Secure scene and check danger",
+        "Open windows",
+        "Call 911"
+      ],
+      answer: 1
+    },
+    {
+      question: "24. Never allow passengers to:",
+      choices: [
+        "Eat",
+        "Block emergency exits",
+        "Wear headphones",
+        "Be loud"
+      ],
+      answer: 1
+    },
+    {
+      question: "25. What should you do after each passenger trip?",
+      choices: [
+        "Walk through to check for sleeping passengers",
+        "Gas up",
+        "Rest",
+        "Play music"
+      ],
+      answer: 0
+    }
+  ];
+
+  const quizForm = document.getElementById("quizForm");
+  const submitBtn = document.getElementById("submitBtn");
+  const scoreDiv = document.getElementById("score");
+
+  // Generate quiz questions
+  quizData.forEach((item, i) => {
+    const div = document.createElement("div");
+    div.className = "question";
+
+    const q = document.createElement("p");
+    q.textContent = item.question;
+    div.appendChild(q);
+
+    const answersDiv = document.createElement("div");
+    answersDiv.className = "answers";
+
+    item.choices.forEach((choice, idx) => {
+      const label = document.createElement("label");
+      const radio = document.createElement("input");
+      radio.type = "radio";
+      radio.name = "q" + i;
+      radio.value = idx;
+
+      label.appendChild(radio);
+      label.appendChild(document.createTextNode(" " + choice));
+      answersDiv.appendChild(label);
+    });
+
+    div.appendChild(answersDiv);
+    quizForm.appendChild(div);
+  });
+
+  submitBtn.addEventListener("click", () => {
+    let score = 0;
+    for(let i = 0; i < quizData.length; i++) {
+      const radios = document.getElementsByName("q" + i);
+      let userAnswer = -1;
+      for (const r of radios) {
+        if (r.checked) {
+          userAnswer = parseInt(r.value);
+          break;
+        }
+      }
+      if (userAnswer === quizData[i].answer) {
+        score++;
+      }
+    }
+    scoreDiv.textContent = `You scored ${score} out of ${quizData.length}.`;
+  });
+</script>
+
+</body>
+</html>
